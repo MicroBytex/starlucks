@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video - StarLuck</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="https://raw.githubusercontent.com/KaitoNekox/StarLuck/refs/heads/main/file_00000000663461f78983b0756bc1f1d0.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #238636;
+            --secondary-color: #2ea043;
+            --background-color: #0d1117;
+            --sidebar-color: #161b22;
+            --text-color: #c9d1d9;
+            --border-color: #30363d;
+            --card-color: #161b22;
+            --hover-color: #1f6feb;
+        }
+
+        .light-theme {
+            --primary-color: #1f883d;
+            --secondary-color: #2da44e;
+            --background-color: #ffffff;
+            --sidebar-color: #f6f8fa;
+            --text-color: #24292f;
+            --border-color: #d0d7de;
+            --card-color: #f6f8fa;
+            --hover-color: #0969da;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header styles */
+        .video-header {
+            display: flex;
+            align-items: center;
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .video-logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .video-logo i {
+            font-size: 24px;
+        }
+
+        .divider {
+            height: 1px;
+            background-color: var(--border-color);
+            margin: 0 24px;
+        }
+
+        /* Main content styles */
+        .video-container {
+            padding: 24px;
+            flex: 1;
+            display: flex;
+            gap: 32px;
+        }
+
+        .video-main {
+            flex: 2;
+        }
+
+        .video-player-container {
+            width: 100%;
+            margin-bottom: 24px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .video-player {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background-color: #000;
+            border: none;
+            border-radius: 8px;
+        }
+
+        .video-title {
+            font-size: 24px;
+            margin-bottom: 16px;
+            color: var(--text-color);
+        }
+
+        .video-description {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 24px;
+            color: var(--text-color);
+            opacity: 0.9;
+        }
+
+        .video-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .like-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background-color: var(--card-color);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+
+        .like-btn:hover {
+            background-color: var(--hover-color);
+            color: white;
+        }
+
+        .like-btn.liked {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        /* Recommendations sidebar */
+        .recommendations-sidebar {
+            flex: 1;
+            max-width: 350px;
+        }
+
+        .recommendations-title {
+            font-size: 20px;
+            margin-bottom: 16px;
+            color: var(--text-color);
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .recommendation-card {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 6px;
+        }
+
+        .recommendation-card:hover {
+            background-color: var(--card-color);
+        }
+
+        .recommendation-thumbnail {
+            width: 120px;
+            height: 68px;
+            border-radius: 4px;
+            object-fit: cover;
+            border: 1px solid var(--border-color);
+        }
+
+        .recommendation-info {
+            flex: 1;
+        }
+
+        .recommendation-title {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 4px;
+            color: var(--text-color);
+        }
+
+        .recommendation-views {
+            font-size: 12px;
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+
+        /* Footer styles */
+        .video-footer {
+            text-align: center;
+            padding: 24px;
+            border-top: 1px solid var(--border-color);
+            margin-top: auto;
+            background-color: var(--background-color);
+        }
+
+        /* Responsive styles */
+        @media (max-width: 1024px) {
+            .video-container {
+                flex-direction: column;
+            }
+            
+            .recommendations-sidebar {
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .video-title {
+                font-size: 20px;
+            }
+            
+            .video-description {
+                font-size: 15px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .video-header {
+                padding: 16px;
+            }
+            
+            .video-container {
+                padding: 16px;
+            }
+            
+            .divider {
+                margin: 0 16px;
+            }
+            
+            .video-actions {
+                gap: 8px;
+            }
+            
+            .like-btn {
+                padding: 6px 12px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="video-header">
+        <div class="video-logo">
+            <i class="fas fa-clover"></i>
+            <span>StarLuck</span>
+        </div>
+    </div>
+    <div class="divider"></div>
+
+    <!-- Main Content -->
+    <div class="video-container">
+        <div class="video-main">
+            <div class="video-player-container">
+                <!-- Reemplaza el src con tu enlace de video -->
+                <iframe class="video-player" src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+                        title="YouTube video player" frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen></iframe>
+            </div>
+            
+            <h1 class="video-title">Cómo crear un sitio web moderno con HTML y CSS</h1>
+            
+            <p class="video-description">
+                En este tutorial aprenderás los fundamentos para crear un sitio web responsive desde cero. 
+                Cubriremos HTML5, CSS3, Flexbox, Grid y técnicas modernas de diseño. Perfecto para principiantes 
+                que quieren iniciar en el desarrollo web frontend. Al final del video tendrás los conocimientos 
+                para crear tu propio portafolio web.
+            </p>
+            
+            <div class="video-actions">
+                <div class="like-btn" id="likeBtn">
+                    <i class="far fa-thumbs-up"></i>
+                    <span id="likeCount">1,245</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Recommendations Sidebar -->
+        <div class="recommendations-sidebar">
+            <h3 class="recommendations-title">Recomendados para ti</h3>
+            
+            <div class="recommendation-card" onclick="window.location.href='video2.html'">
+                <img src="https://source.unsplash.com/random/200x120/?javascript" alt="Video recomendado" class="recommendation-thumbnail">
+                <div class="recommendation-info">
+                    <h4 class="recommendation-title">JavaScript para principiantes - Curso completo</h4>
+                    <p class="recommendation-views">125K vistas</p>
+                </div>
+            </div>
+            
+            <div class="recommendation-card" onclick="window.location.href='video3.html'">
+                <img src="https://source.unsplash.com/random/200x120/?react" alt="Video recomendado" class="recommendation-thumbnail">
+                <div class="recommendation-info">
+                    <h4 class="recommendation-title">Aprende React en 1 hora - Lo esencial</h4>
+                    <p class="recommendation-views">89K vistas</p>
+                </div>
+            </div>
+            
+            <div class="recommendation-card" onclick="window.location.href='video4.html'">
+                <img src="https://source.unsplash.com/random/200x120/?nodejs" alt="Video recomendado" class="recommendation-thumbnail">
+                <div class="recommendation-info">
+                    <h4 class="recommendation-title">Creando una API REST con Node.js y Express</h4>
+                    <p class="recommendation-views">42K vistas</p>
+                </div>
+            </div>
+            
+            <div class="recommendation-card" onclick="window.location.href='video5.html'">
+                <img src="https://source.unsplash.com/random/200x120/?git" alt="Video recomendado" class="recommendation-thumbnail">
+                <div class="recommendation-info">
+                    <h4 class="recommendation-title">Git y GitHub - Guía completa para desarrolladores</h4>
+                    <p class="recommendation-views">76K vistas</p>
+                </div>
+            </div>
+            
+            <div class="recommendation-card" onclick="window.location.href='video6.html'">
+                <img src="https://source.unsplash.com/random/200x120/?python" alt="Video recomendado" class="recommendation-thumbnail">
+                <div class="recommendation-info">
+                    <h4 class="recommendation-title">Python para análisis de datos - Pandas básico</h4>
+                    <p class="recommendation-views">58K vistas</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="video-footer">
+        <p>&copy; StarLuck. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        // Like button functionality
+        const likeBtn = document.getElementById('likeBtn');
+        const likeIcon = likeBtn.querySelector('i');
+        const likeCount = document.getElementById('likeCount');
+        let isLiked = false;
+        let likes = 1245;
+
+        likeBtn.addEventListener('click', () => {
+            isLiked = !isLiked;
+            
+            if (isLiked) {
+                likes++;
+                likeBtn.classList.add('liked');
+                likeIcon.classList.remove('far');
+                likeIcon.classList.add('fas');
+            } else {
+                likes--;
+                likeBtn.classList.remove('liked');
+                likeIcon.classList.remove('fas');
+                likeIcon.classList.add('far');
+            }
+            
+            // Format number with commas
+            likeCount.textContent = likes.toLocaleString();
+        });
+
+        // Theme switcher (example functionality)
+        function setTheme(theme) {
+            if (theme === 'light') {
+                document.documentElement.classList.add('light-theme');
+            } else {
+                document.documentElement.classList.remove('light-theme');
+            }
+        }
+
+        // Check for saved theme preference
+        if (localStorage.getItem('theme') === 'light') {
+            setTheme('light');
+        }
+    </script>
+</body>
+</html>

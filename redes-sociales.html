@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redes Sociales - StarLuck</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="https://raw.githubusercontent.com/KaitoNekox/StarLuck/refs/heads/main/file_00000000663461f78983b0756bc1f1d0.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #238636;
+            --secondary-color: #2ea043;
+            --background-color: #0d1117;
+            --sidebar-color: #161b22;
+            --text-color: #c9d1d9;
+            --border-color: #30363d;
+            --card-color: #161b22;
+            --hover-color: #1f6feb;
+        }
+
+        .light-theme {
+            --primary-color: #1f883d;
+            --secondary-color: #2da44e;
+            --background-color: #ffffff;
+            --sidebar-color: #f6f8fa;
+            --text-color: #24292f;
+            --border-color: #d0d7de;
+            --card-color: #f6f8fa;
+            --hover-color: #0969da;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header styles */
+        .social-header {
+            display: flex;
+            align-items: center;
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .social-logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .social-logo i {
+            font-size: 24px;
+        }
+
+        .divider {
+            height: 1px;
+            background-color: var(--border-color);
+            margin: 0 24px;
+        }
+
+        /* Main content styles */
+        .social-container {
+            padding: 24px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .social-title {
+            font-size: 28px;
+            margin-bottom: 40px;
+            color: var(--text-color);
+            text-align: center;
+        }
+
+        .social-subtitle {
+            font-size: 18px;
+            margin-bottom: 24px;
+            color: var(--text-color);
+            opacity: 0.8;
+            text-align: center;
+            max-width: 600px;
+        }
+
+        .social-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .social-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            color: white;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .social-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .social-btn i {
+            font-size: 24px;
+        }
+
+        .whatsapp {
+            background-color: #25D366;
+        }
+
+        .whatsapp:hover {
+            background-color: #128C7E;
+        }
+
+        .telegram {
+            background-color: #0088cc;
+        }
+
+        .telegram:hover {
+            background-color: #006699;
+        }
+
+        .github {
+            background-color: #333;
+        }
+
+        .github:hover {
+            background-color: #222;
+        }
+
+        .tiktok {
+            background-color: #000;
+        }
+
+        .tiktok:hover {
+            background-color: #333;
+        }
+
+        .youtube {
+            background-color: #FF0000;
+        }
+
+        .youtube:hover {
+            background-color: #CC0000;
+        }
+
+        /* Footer styles */
+        .social-footer {
+            text-align: center;
+            padding: 24px;
+            border-top: 1px solid var(--border-color);
+            margin-top: auto;
+            background-color: var(--background-color);
+        }
+
+        /* Responsive styles */
+        @media (max-width: 576px) {
+            .social-header {
+                padding: 16px;
+            }
+
+            .social-container {
+                padding: 16px;
+            }
+
+            .social-title {
+                font-size: 24px;
+                margin-bottom: 30px;
+            }
+
+            .social-subtitle {
+                font-size: 16px;
+            }
+
+            .social-btn {
+                padding: 12px 16px;
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="social-header">
+        <div class="social-logo">
+            <i class="fas fa-clover"></i>
+            <span>StarLuck</span>
+        </div>
+    </div>
+    <div class="divider"></div>
+
+    <!-- Main Content -->
+    <div class="social-container">
+        <h1 class="social-title">Nuestras Redes Sociales</h1>
+        <p class="social-subtitle">Conéctate con nosotros a través de nuestras plataformas. Síguenos para estar al tanto de las últimas actualizaciones, tutoriales y contenido exclusivo.</p>
+        
+        <div class="social-buttons">
+            <a href="https://chat.whatsapp.com/ChcXbOMzjDb015NzAC5nst" class="social-btn whatsapp" target="_blank">
+                <i class="fab fa-whatsapp"></i>
+                <span>WhatsApp</span>
+            </a>
+            
+            <a href="https://t.me/microbytte" class="social-btn telegram" target="_blank">
+                <i class="fab fa-telegram"></i>
+                <span>Telegram</span>
+            </a>
+            
+            <a href="https://github.com/Kaitonekox/" class="social-btn github" target="_blank">
+                <i class="fab fa-github"></i>
+                <span>GitHub</span>
+            </a>
+            
+            <a href="https://tiktok.com/@kaitonekox" class="social-btn tiktok" target="_blank">
+                <i class="fab fa-tiktok"></i>
+                <span>TikTok</span>
+            </a>
+            
+            <a href="https://youtube.com/@kaitonekox?si=d2eEc48721Oijin6" class="social-btn youtube" target="_blank">
+                <i class="fab fa-youtube"></i>
+                <span>YouTube</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="social-footer">
+        <p>&copy; StarLuck. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        // Theme switcher (example functionality)
+        // This would typically be controlled by the main page settings
+        function setTheme(theme) {
+            if (theme === 'light') {
+                document.documentElement.classList.add('light-theme');
+            } else {
+                document.documentElement.classList.remove('light-theme');
+            }
+        }
+
+        // Check for saved theme preference
+        if (localStorage.getItem('theme') === 'light') {
+            setTheme('light');
+        }
+    </script>
+</body>
+</html>

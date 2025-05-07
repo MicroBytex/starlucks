@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minijuego - StarLuck</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="https://raw.githubusercontent.com/KaitoNekox/StarLuck/refs/heads/main/file_00000000663461f78983b0756bc1f1d0.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #238636;
+            --secondary-color: #2ea043;
+            --background-color: #0d1117;
+            --sidebar-color: #161b22;
+            --text-color: #c9d1d9;
+            --border-color: #30363d;
+            --card-color: #161b22;
+            --hover-color: #1f6feb;
+        }
+
+        .light-theme {
+            --primary-color: #1f883d;
+            --secondary-color: #2da44e;
+            --background-color: #ffffff;
+            --sidebar-color: #f6f8fa;
+            --text-color: #24292f;
+            --border-color: #d0d7de;
+            --card-color: #f6f8fa;
+            --hover-color: #0969da;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Header styles */
+        .game-header {
+            display: flex;
+            align-items: center;
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .game-logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .game-logo i {
+            font-size: 24px;
+        }
+
+        .divider {
+            height: 1px;
+            background-color: var(--border-color);
+            margin: 0 24px;
+        }
+
+        /* Game container */
+        .game-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        .game-title {
+            font-size: 32px;
+            margin-bottom: 16px;
+            color: var(--primary-color);
+            text-align: center;
+        }
+
+        .game-description {
+            font-size: 18px;
+            margin-bottom: 30px;
+            text-align: center;
+            max-width: 600px;
+            color: var(--text-color);
+        }
+
+        .game-stats {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .stat-label {
+            font-size: 16px;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+
+        .clover {
+            position: absolute;
+            font-size: 40px;
+            color: var(--primary-color);
+            cursor: pointer;
+            transition: transform 0.2s;
+            user-select: none;
+        }
+
+        .clover:hover {
+            transform: scale(1.1);
+        }
+
+        .clover:active {
+            transform: scale(0.9);
+        }
+
+        .start-btn {
+            padding: 12px 24px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+
+        .start-btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .timer-bar {
+            width: 100%;
+            height: 6px;
+            background-color: var(--border-color);
+            margin-top: 20px;
+            border-radius: 3px;
+            overflow: hidden;
+            max-width: 400px;
+        }
+
+        .timer-progress {
+            height: 100%;
+            width: 100%;
+            background-color: var(--primary-color);
+            transition: width 0.1s linear;
+        }
+
+        .game-over {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-top: 20px;
+            text-align: center;
+            display: none;
+        }
+
+        /* Footer styles */
+        .game-footer {
+            text-align: center;
+            padding: 24px;
+            border-top: 1px solid var(--border-color);
+            margin-top: auto;
+            background-color: var(--background-color);
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .pulse {
+            animation: pulse 1s infinite;
+        }
+
+        @media (max-width: 768px) {
+            .game-title {
+                font-size: 28px;
+            }
+            
+            .game-description {
+                font-size: 16px;
+            }
+            
+            .stat-value {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="game-header">
+        <div class="game-logo">
+            <i class="fas fa-clover"></i>
+            <span>StarLuck</span>
+        </div>
+    </div>
+    <div class="divider"></div>
+
+    <!-- Game Container -->
+    <div class="game-container" id="gameContainer">
+        <h1 class="game-title">Atrapa los Tréboles</h1>
+        <p class="game-description">Haz clic en los tréboles que aparecen en la pantalla para ganar puntos. Tienes 30 segundos para conseguir la mayor cantidad posible.</p>
+        
+        <div class="game-stats">
+            <div class="stat">
+                <div class="stat-value" id="score">0</div>
+                <div class="stat-label">Puntos</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value" id="time">30</div>
+                <div class="stat-label">Segundos</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value" id="highScore">0</div>
+                <div class="stat-label">Récord</div>
+            </div>
+        </div>
+        
+        <button class="start-btn" id="startBtn">
+            <i class="fas fa-play"></i>
+            Comenzar
+        </button>
+        
+        <div class="timer-bar">
+            <div class="timer-progress" id="timerBar"></div>
+        </div>
+        
+        <div class="game-over" id="gameOver">
+            ¡Juego terminado! Tu puntaje: <span id="finalScore">0</span>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="game-footer">
+        <p>&copy; StarLuck. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        // Game elements
+        const gameContainer = document.getElementById('gameContainer');
+        const startBtn = document.getElementById('startBtn');
+        const scoreElement = document.getElementById('score');
+        const timeElement = document.getElementById('time');
+        const highScoreElement = document.getElementById('highScore');
+        const timerBar = document.getElementById('timerBar');
+        const gameOverElement = document.getElementById('gameOver');
+        const finalScoreElement = document.getElementById('finalScore');
+
+        // Game variables
+        let score = 0;
+        let timeLeft = 30;
+        let highScore = localStorage.getItem('highScore') || 0;
+        let gameInterval;
+        let timerInterval;
+        let isGameRunning = false;
+
+        // Update high score display
+        highScoreElement.textContent = highScore;
+
+        // Start game function
+        function startGame() {
+            if (isGameRunning) return;
+            
+            isGameRunning = true;
+            score = 0;
+            timeLeft = 30;
+            scoreElement.textContent = score;
+            timeElement.textContent = timeLeft;
+            gameOverElement.style.display = 'none';
+            startBtn.disabled = true;
+            
+            // Start timer
+            timerInterval = setInterval(updateTimer, 1000);
+            
+            // Create clovers
+            gameInterval = setInterval(createClover, 800);
+            
+            // Initial clover
+            createClover();
+        }
+
+        // Create a clover
+        function createClover() {
+            if (!isGameRunning) return;
+            
+            const clover = document.createElement('div');
+            clover.innerHTML = '<i class="fas fa-clover"></i>';
+            clover.className = 'clover';
+            
+            // Random position
+            const maxX = gameContainer.clientWidth - 40;
+            const maxY = gameContainer.clientHeight - 40;
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * maxY);
+            
+            clover.style.left = `${randomX}px`;
+            clover.style.top = `${randomY}px`;
+            
+            // Add click event
+            clover.addEventListener('click', () => {
+                score++;
+                scoreElement.textContent = score;
+                clover.remove();
+                
+                // Add pulse effect to score
+                scoreElement.classList.add('pulse');
+                setTimeout(() => {
+                    scoreElement.classList.remove('pulse');
+                }, 300);
+            });
+            
+            // Remove after 2 seconds if not clicked
+            setTimeout(() => {
+                if (clover.parentNode) {
+                    clover.remove();
+                }
+            }, 2000);
+            
+            gameContainer.appendChild(clover);
+        }
+
+        // Update timer
+        function updateTimer() {
+            timeLeft--;
+            timeElement.textContent = timeLeft;
+            timerBar.style.width = `${(timeLeft / 30) * 100}%`;
+            
+            if (timeLeft <= 0) {
+                endGame();
+            }
+        }
+
+        // End game function
+        function endGame() {
+            isGameRunning = false;
+            clearInterval(gameInterval);
+            clearInterval(timerInterval);
+            startBtn.disabled = false;
+            
+            // Remove all remaining clovers
+            document.querySelectorAll('.clover').forEach(clover => clover.remove());
+            
+            // Show game over
+            finalScoreElement.textContent = score;
+            gameOverElement.style.display = 'block';
+            
+            // Update high score
+            if (score > highScore) {
+                highScore = score;
+                highScoreElement.textContent = highScore;
+                localStorage.setItem('highScore', highScore);
+            }
+        }
+
+        // Start game button
+        startBtn.addEventListener('click', startGame);
+
+        // Theme switcher (example functionality)
+        function setTheme(theme) {
+            if (theme === 'light') {
+                document.documentElement.classList.add('light-theme');
+            } else {
+                document.documentElement.classList.remove('light-theme');
+            }
+        }
+
+        // Check for saved theme preference
+        if (localStorage.getItem('theme') === 'light') {
+            setTheme('light');
+        }
+    </script>
+</body>
+</html>
