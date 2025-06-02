@@ -1,0 +1,50 @@
+[
+    {
+        "title": "Mod Menu StarLuck",
+        "description": "Este es solo un mod menu con cosas sencillas no tan funcionales.",
+        "image": "../starluck.png",
+        "url": "../404.html"
+    },
+    {
+        "title": "Dead Rails",
+        "description": "Alv.",
+        "image": "../dead-rails-script-no-key.webp",
+        "url": "../item2.html"
+    },
+    {
+        "title": "Alchemy Hub",
+        "description": "Script para blox.",
+        "image": "../alchemy.jpg",
+        "url": "../item3.html"
+    },
+    {
+        "title": "The Best Script Pet Simulator X:",
+        "description": "Ñiñiñiñiñi.",
+        "image": "../pet-simulator-x.webp",
+        "url": "../item4.html"
+    },
+    {
+        "title": "Próximos Eventos",
+        "description": "No te pierdas nuestros próximos webinars y talleres gratuitos.",
+        "image": "../mod menu.webp",
+        "url": "../404.html"
+    },
+    {
+        "title": "MyMonkey",
+        "description": "Banana 🍌.",
+        "image": "../monkeyy.webp",
+        "url": "../item6.html"
+    },
+    {
+        "title": "Hexa Hub OP SCRIPT BGS Infinity",
+        "description": "[+] Rift Tweener (bypasses anti TP, can fling sometimes).",
+        "image": "https://scriptblox.com/images/script/0-1746641198747.png",
+        "url": "../item7.html"
+    },
+    {
+        "title": "RainV3",
+        "description": "[UPD 🔪] Forsaken.",
+        "image": "https://tr.rbxcdn.com/180DAY-11cb09ac3cc6fc646d152c3da0cfc8d2/480/270/Image/Png/noFilter",
+        "url": "../item8.html"
+    }
+]
